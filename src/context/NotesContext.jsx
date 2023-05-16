@@ -57,8 +57,12 @@ export default function NotesProvider(props){
 
     const [persistentData, setPersistentData] = useLocalStorage("notes", initialNotesData)
 
+        useEffect(() => {
+            notesDispatch()
+        }, [])
+
     useEffect(() => {
-        console.log("local Storage:" + persistentData)
+        console.log("Local Storage:" + persistentData);
     }, [persistentData]);
 
     useEffect(() => {
