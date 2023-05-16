@@ -1,5 +1,6 @@
 
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
+import { useLocalStorage } from "react-use";
 
 const initialNotesData = [
     {
@@ -41,24 +42,34 @@ const notesReducer = (previousState, instructions) => {
 }
 
 export const NoteDataContext = createContext(null);
-export const NoteDateDispatchContext = createContext(null)
+export const NoteDispatchContext = createContext(null)
 
 export function useNoteData(){
     return useContext(NoteDataContext)
 }
 
 export function useNoteDispatch(){
-    return useContext(NoteDataDispatchContext)
+    return useContext(NoteDispatchContext)
 }
 
 export default function NotesProvider(props){
     const [notesData, notesDispatch] = useReducer(notesReducer, initialNotesData)
 
+    const [persistentData, setPersistentData] = useLocalStorage("notes", initialNotesData)
+
+    useEffect(() => {
+        console.log("local Storage:" + persistentData)
+    }, [persistentData]);
+
+    useEffect(() => {
+        setPersistentData(JSON.stringify(notesData))
+    }, [notesData]);
+
     return(
         <NoteDataContext.Provider value={notesData}>
-            <NoteDateDispatchContext.Provider value={notesDispatch}>
+            <NoteDispatchContext.Provider value={notesDispatch}>
                 {props.children}
-            </NoteDateDispatchContext.Provider>
+            </NoteDispatchContext.Provider>
         </NoteDataContext.Provider>
     )
 }
