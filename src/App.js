@@ -11,7 +11,7 @@ function App() {
         <Route path="/notes/:noteID" element={<h1>TODO</h1>} />
         <Route path="/notes/:noteID/edit" element={<h1>TODO</h1>} />
         <Route path="/notes/searchByWord/:word" element={<h1>TODO</h1>} />
-        <Route path="/notes/sort/dueDate" element={<h1>TODO</h1>} />
+        <Route path="/notes/sort/duedate" element={<h1>TODO</h1>} />
         <Route path="/notes/sort/createddate" element={<h1>TODO</h1>} />
         <Route path="/notes/filter/overdue" element={<h1>TODO</h1>} />
         <Route path="/notes/filter/done" element={<h1>TODO</h1>} />
