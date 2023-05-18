@@ -17,9 +17,15 @@ const notesReducer = (previousState, instructions) => {
     let stateEditable = [...previousState];
 
     switch (instructions.type){
+        case "setup":
+            console.log("Apply persistent data to state now")
+            stateEditable = instructions.data;
+            return stateEditable;
         case "create":
             console.log("TODO: Create note and add to state");
-            break;
+            let newNote = instructions.newNote;
+            stateEditable.push(newNote)
+            return stateEditable
         case "update":
             console.log("TODO: Update specific note and overwrite it");
             break;
@@ -57,8 +63,8 @@ export default function NotesProvider(props){
 
     const [persistentData, setPersistentData] = useLocalStorage("notes", initialNotesData)
 
-        useEffect(() => {
-            notesDispatch()
+    useEffect(() => {
+        notesDispatch({type:"setup", data: persistentData})
         }, [])
 
     useEffect(() => {
